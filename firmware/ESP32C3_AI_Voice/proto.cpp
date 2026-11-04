@@ -1,6 +1,8 @@
+#include "platform.h"
 #include "proto.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 // 在 [s, s+len) 里找 "key": ,返回值起始位置(跳过冒号和空格);找不到返回 nullptr。
 // 只处理我们自己服务器发的那几种规整 JSON,不处理转义、嵌套、数组。
@@ -31,9 +33,17 @@ static int32_t readInt(const char *p, const char *end, int32_t dflt) {
   bool neg = false;
   if (*p == '-') { neg = true; p++; }
   if (p >= end || *p < '0' || *p > '9') return dflt;
-  int32_t v = 0;
-  while (p < end && *p >= '0' && *p <= '9') { v = v * 10 + (*p - '0'); p++; }
-  return neg ? -v : v;
+  uint32_t v = 0;
+  const uint32_t limit = neg ? 2147483648u : 2147483647u;
+  while (p < end && *p >= '0' && *p <= '9') {
+    const uint32_t digit = (uint32_t)(*p++ - '0');
+    if (v > (limit - digit) / 10u) return dflt;
+    v = v * 10u + digit;
+  }
+  while (p < end && (*p == ' ' || *p == '\t' || *p == '\r' || *p == '\n')) ++p;
+  if (p == end || (*p != ',' && *p != '}')) return dflt;
+  if (neg && v == 2147483648u) return INT32_MIN;
+  return neg ? -(int32_t)v : (int32_t)v;
 }
 
 // 读一个带引号的字符串到 dst(截断,始终以 \0 结尾)。
@@ -55,7 +65,9 @@ void protoParse(const char *json, size_t len, ProtoMsg *out) {
   out->t = MsgType::UNKNOWN;
   out->seq = -1;
   out->sr = 0;
+  out->volume = -1;
   out->name[0] = '\0';
+  out->id[0] = '\0';
 
   const char *end = json + len;
   const char *v = findValue(json, len, "t");
@@ -71,6 +83,10 @@ void protoParse(const char *json, size_t len, ProtoMsg *out) {
     { "asr",         MsgType::ASR         },
     { "reply",       MsgType::REPLY       },
     { "error",       MsgType::ERROR_MSG   },
+    { "lab_identify", MsgType::LAB_IDENTIFY },
+    { "lab_voice", MsgType::LAB_VOICE },
+    { "lab_interrupt", MsgType::LAB_INTERRUPT },
+    { "lab_volume", MsgType::LAB_VOLUME },
   };
   for (auto &e : tbl) {
     const size_t l = strlen(e.s);
@@ -81,6 +97,36 @@ void protoParse(const char *json, size_t len, ProtoMsg *out) {
   }
 
   switch (out->t) {
+    case MsgType::LAB_VOICE:
+    case MsgType::LAB_INTERRUPT:
+    case MsgType::LAB_VOLUME:
+    case MsgType::LAB_IDENTIFY: {
+      const char *p = findValue(json, len, "id");
+      if (!p || end - p < 34 || p[0] != '"' || p[33] != '"') {
+        out->t = MsgType::UNKNOWN;
+        break;
+      }
+      for (int i = 0; i < 32; ++i) {
+        const char ch = p[i + 1];
+        if (!((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f'))) {
+          out->t = MsgType::UNKNOWN;
+          break;
+        }
+      }
+      if (out->t != MsgType::UNKNOWN) {
+        memcpy(out->id, p + 1, 32);
+        out->id[32] = '\0';
+      }
+      if(out->t == MsgType::LAB_VOLUME) {
+        const char *v=findValue(json,len,"volume"); int value=0;
+        if(!v || v>=end || *v<'0'||*v>'9') {out->t=MsgType::UNKNOWN;break;}
+        while(v<end && *v>='0'&&*v<='9'){value=value*10+(*v++-'0');if(value>100)break;}
+        while(v<end && (*v==' '||*v=='\t'))++v;
+        if(value>100 || v==end || (*v!=','&&*v!='}')){out->t=MsgType::UNKNOWN;break;}
+        out->volume=value;
+      }
+      break;
+    }
     case MsgType::READY:
       out->sr = readInt(findValue(json, len, "sr"), end, 0);
       break;

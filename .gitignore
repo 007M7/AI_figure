@@ -25,3 +25,6 @@ psk.secrets
 
 # 部署用 SSH 私钥
 assets/ssh/
+
+# Optional private BLE gateway bootstrap, never publish
+ble_gateway_private.h
