@@ -1,3 +1,4 @@
+#include "platform.h"
 #include "cue.h"
 #include "config.h"
 #include "audio_io.h"
@@ -6,8 +7,7 @@
 #define CUE_LUT_LEN   256
 #define CUE_RAMP      64      // 4 ms 的进出包络。不做的话每个音头尾都"啪"一声
 
-// Stage 2 实测:幅度 0.6 FS * 增益 100/256 ≈ 0.055 W,离 brownout 很远。
-// 这里的 160/255 ≈ 0.63 FS,和那次验证过的电平基本一致,别往上加。
+// 160/255 ≈ 0.63 FS,是实板上验证过的提示音电平,别往上加。
 #define CUE_AMP       160
 
 static int16_t s_lut[CUE_LUT_LEN];
@@ -17,7 +17,7 @@ void cueBegin() {
   if (s_ready) return;
   for (int i = 0; i < CUE_LUT_LEN; i++) {
     // 参数最大 2π,远小于 newlib 走 Payne-Hanek 的 201 阈值;而且只跑这一次。
-    s_lut[i] = (int16_t)lroundf(32767.0f * sinf(2.0f * (float)PI * (float)i / (float)CUE_LUT_LEN));
+    s_lut[i] = (int16_t)lroundf(32767.0f * sinf(2.0f * 3.14159265358979323846f * (float)i / (float)CUE_LUT_LEN));
   }
   s_ready = true;
 }
@@ -27,10 +27,10 @@ const int16_t *cueSineTable() {
   return s_lut;
 }
 
-void cuePlay(const CueNote *notes, uint8_t count) {
-  if (!notes || count == 0) return;
+static bool playNotes(const CueNote *notes, uint8_t count) {
+  if (!notes || count == 0) return false;
   cueBegin();
-  if (!audioStartPlayback()) return;
+  if (!audioStartPlayback()) return false;
 
   static int16_t buf[FRAME_SAMPLES];
 
@@ -62,12 +62,22 @@ void cuePlay(const CueNote *notes, uint8_t count) {
       }
 
       size_t w = audioWrite(buf, m, 200);
-      if (w == 0) break;          // TX 卡住,别死等
+      if (w == 0 || w > m) {
+        audioStopPlayback();
+        return false;
+      }
       done += w;
     }
   }
 
   audioStopPlayback();            // 内含补静音 -> drain -> 关功放
+  return true;
+}
+
+void cuePlay(const CueNote *notes, uint8_t count) { (void)playNotes(notes, count); }
+bool cueIdentify() {
+  static const CueNote notes[] = {{1046, 110, CUE_AMP}};
+  return playNotes(notes, 1);
 }
 
 // ---------------------------------------------------------------- 预定义
@@ -84,6 +94,11 @@ void cueLinkUp() {
 void cueLinkDown() {
   static const CueNote n[] = { {880, 90, CUE_AMP}, {587, 130, CUE_AMP} };
   cuePlay(n, 2);
+}
+
+void cueProv() {
+  static const CueNote n[] = { {523, 90, CUE_AMP}, {659, 90, CUE_AMP}, {784, 140, CUE_AMP} };
+  cuePlay(n, 3);
 }
 
 void cueError() {

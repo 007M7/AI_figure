@@ -1,7 +1,8 @@
 #pragma once
-#include <Arduino.h>
+#include <stdint.h>
+#include <stddef.h>
 
-// GPIO3 按键,接 GND,INPUT_PULLUP。按下 = LOW。
+// GPIO3 按键,外部 100k 上拉,按下接 GND。按下 = 0。
 // 软件去抖,边沿事件读一次就消费掉。
 class Button {
 public:
@@ -10,13 +11,15 @@ public:
 
   bool tookPress();                               // 消费一次"按下"事件
   bool tookRelease();                              // 消费一次"松开"事件
+  bool isPressed() const { return _stable == 0; }
+  bool isActive() const { return _raw == 0 || _stable == 0; } // Includes a press still debouncing.
   void clearEvents() { _press = _release = false; }
 
 private:
   uint8_t  _pin        = 0;
   uint16_t _debounceMs = BUTTON_DEBOUNCE_MS_FALLBACK;
-  int      _stable     = HIGH;
-  int      _raw        = HIGH;
+  int      _stable     = 1;
+  int      _raw        = 1;
   uint32_t _lastEdgeMs = 0;
   bool     _press      = false;
   bool     _release    = false;

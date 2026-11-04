@@ -1,0 +1,473 @@
+{
+  "date": "2026-11-04",
+  "voice_version": "0.5.17-handoff",
+  "selftest_version": "hwtest-2-handoff",
+  "baseline_commit": "cc74723ea144b7aa1c84441d9e60b6494fa2ddc8",
+  "similarity": {
+    "method": "2 * matching lines / (baseline + candidate lines), difflib.SequenceMatcher(autojunk=False); C/C++ .cpp/.h only, additions included",
+    "percent": 86.76,
+    "baseline_lines": 2895,
+    "candidate_lines": 3541,
+    "matching_lines": 2792,
+    "shared_paths": 34,
+    "byte_identical_shared_paths": 12,
+    "new_source_paths": 6,
+    "not_a_plagiarism_or_correctness_claim": true
+  },
+  "native_tests": {
+    "result": "passed",
+    "compiler": "MinGW g++ 15.2.0, -Wall -Wextra -Werror",
+    "suites": [
+      "host_tests.cpp power/PDM",
+      "test_button.py",
+      "test_battery_adc.py (64 equivalence sequences and error paths)",
+      "test_session_recovery.py (real session, protocol and WS)",
+      "test_ble_control.py (real endpoint, pinned cJSON)"
+    ]
+  },
+  "builds": [
+    {
+      "configuration": "voice_tls",
+      "result": "passed",
+      "bytes": 1366928,
+      "partition_bytes": 1966080,
+      "free_percent": 30.47,
+      "sha256": "09aec079d85cde5f1053847e98283b2f51bcfd191e10824845bd1d3b78e48741",
+      "credentials": "synthetic, not for deployment",
+      "compiler_warning_lines": 0
+    },
+    {
+      "configuration": "voice_plain",
+      "result": "passed",
+      "bytes": 1367088,
+      "partition_bytes": 1966080,
+      "free_percent": 30.47,
+      "sha256": "8b1a0b13b28986ffd4e48331c678926fcf49b411c5148f42008095733af3c9c5",
+      "credentials": "synthetic, not for deployment",
+      "compiler_warning_lines": 0
+    },
+    {
+      "configuration": "offline_hwtest",
+      "result": "passed",
+      "bytes": 226320,
+      "partition_bytes": 1048576,
+      "free_percent": 78.42,
+      "sha256": "7c219b9d2919c6425da39120eb3504aae9343afdec159a162f7c934ee0443a40",
+      "credentials": "synthetic, not for deployment",
+      "compiler_warning_lines": 0
+    }
+  ],
+  "secrets_review": {
+    "result": "passed",
+    "checks": [
+      "actual local private header credential values absent from candidate files",
+      "no sk- API key literal",
+      "no private headers, binaries, env or conversation DB selected"
+    ],
+    "real_credentials_not_used_in_builds": true
+  },
+  "hardware_acceptance": {
+    "this_version_flashed": false,
+    "v2_board_tested": false,
+    "open": [
+      "low battery ADC reading",
+      "recording uplink disconnect reproduction",
+      "BLE/WiFi/TLS long-run coexistence",
+      "real USB standby and battery power tests"
+    ]
+  },
+  "firmware_files": [
+    {
+      "path": "firmware/ESP32C3_AI_Voice/CMakeLists.txt",
+      "sha256_lf": "8399ae545eb608dbb3c83d1c34958b3dbe1816a1918e3f9c30c42a05d2b74e8d"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/README.md",
+      "sha256_lf": "0ab62d8f694ee1c3f30114c74eeb39447247815846ccabc3842675f22c27e794"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/audio_io.cpp",
+      "sha256_lf": "8e7d21f004c351c2179ece556b2373d88e7d60c806631ae1ce0ea2ded6504eb5",
+      "baseline_lines": 153,
+      "current_lines": 153,
+      "common_lines": 153,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/audio_io.h",
+      "sha256_lf": "85560a6a54feb55d99250f7a44c60a9fedc7f5ac5849072896d0acd21c123648",
+      "baseline_lines": 20,
+      "current_lines": 20,
+      "common_lines": 20,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/battery_adc.cpp",
+      "sha256_lf": "99b97794ecb72501dc7140bc8c788bd2aa0724fc7f29292d7e1150a6509282c8",
+      "baseline_lines": 0,
+      "current_lines": 43,
+      "common_lines": 0,
+      "similarity_percent": 0.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/battery_adc.h",
+      "sha256_lf": "23984a72d1ade314205c954d814dfc87b7779de5e4d4f16357cb17ea0e4bc408",
+      "baseline_lines": 0,
+      "current_lines": 20,
+      "common_lines": 0,
+      "similarity_percent": 0.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/ble_control.cpp",
+      "sha256_lf": "66fcd2a10abaf5555c7861f201112f1670f953e80e3b62f377cf17853f80e332",
+      "baseline_lines": 0,
+      "current_lines": 195,
+      "common_lines": 0,
+      "similarity_percent": 0.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/ble_control.h",
+      "sha256_lf": "bb70aa213bed141116ff6fcfacc9e1d77cb990d9a5d691950a46c5d3f43a2f9f",
+      "baseline_lines": 0,
+      "current_lines": 4,
+      "common_lines": 0,
+      "similarity_percent": 0.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/bubble.cpp",
+      "sha256_lf": "bb7f4db23cfb902d2c597070492ba58d81c625c6be56e0d1f259c08966b6a203",
+      "baseline_lines": 114,
+      "current_lines": 114,
+      "common_lines": 114,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/bubble.h",
+      "sha256_lf": "04ced85a99587a29ae852d16093e0b439e3cde156e60f7dd4985c213115ec229",
+      "baseline_lines": 27,
+      "current_lines": 27,
+      "common_lines": 27,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/button.cpp",
+      "sha256_lf": "96180b882687b62edb7ee85f8086ffff6f53bdd87c35141db656ac236e0dd934",
+      "baseline_lines": 46,
+      "current_lines": 51,
+      "common_lines": 45,
+      "similarity_percent": 92.78
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/button.h",
+      "sha256_lf": "28796ae4a2844268c44496637cf6f909547cbb6059cae579c97775afbe8523ab",
+      "baseline_lines": 26,
+      "current_lines": 28,
+      "common_lines": 26,
+      "similarity_percent": 96.3
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/config.h",
+      "sha256_lf": "5dec94513fe31c8b807c86692673b549170175dc4700a8e42288b383addd28ab",
+      "baseline_lines": 74,
+      "current_lines": 77,
+      "common_lines": 71,
+      "similarity_percent": 94.04
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/cue.cpp",
+      "sha256_lf": "65f012bb9bd6873075fd7ce9a662736f4db28e82b7cd5ceb03511486cfc8b0e1",
+      "baseline_lines": 101,
+      "current_lines": 111,
+      "common_lines": 97,
+      "similarity_percent": 91.51
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/cue.h",
+      "sha256_lf": "9d1497c2f4a95e5a788ce361fd9620949b68874b140fdf59a91859ebb4142430",
+      "baseline_lines": 34,
+      "current_lines": 35,
+      "common_lines": 34,
+      "similarity_percent": 98.55
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/dependencies.lock",
+      "sha256_lf": "22376a7df21171bb89d8739f2d9569fd0bbb18cc295a1441d01c2ec06ae99b25"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/device_settings.cpp",
+      "sha256_lf": "713a99ba22df9a3862f8a6615aef7f67dee353cf2c80f279efb5e6447ddff7c2",
+      "baseline_lines": 0,
+      "current_lines": 31,
+      "common_lines": 0,
+      "similarity_percent": 0.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/device_settings.h",
+      "sha256_lf": "476de71345a75a108e5cb0934efb629c6051ff2eca0df374edbdccec0cd069a3",
+      "baseline_lines": 0,
+      "current_lines": 7,
+      "common_lines": 0,
+      "similarity_percent": 0.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/led.cpp",
+      "sha256_lf": "3ba8949b1a2afa992ef4e4f9aa9c52215bce0e6f2878ef3630caf6e0fafe6bff",
+      "baseline_lines": 38,
+      "current_lines": 38,
+      "common_lines": 38,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/led.h",
+      "sha256_lf": "866bc6da641477ac7b8a24e4e022e8096b874b7d3090857d73288658bbbad8ed",
+      "baseline_lines": 22,
+      "current_lines": 22,
+      "common_lines": 22,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/main.cpp",
+      "sha256_lf": "628589fbebe5ee9d96402173ee19072377bf5b3ec7be685b08d176ddf1772906",
+      "baseline_lines": 70,
+      "current_lines": 77,
+      "common_lines": 69,
+      "similarity_percent": 93.88
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/main/CMakeLists.txt",
+      "sha256_lf": "c7020bd0e52e4e4380714a3f75ba5dbef2b20ed4e4976c6dcc21609c1d684aac"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/main/idf_component.yml",
+      "sha256_lf": "3154dd4b87a190b34ad18240d29898560a8cc003c5905b10eda8de2106ba9b16"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/net_prov.cpp",
+      "sha256_lf": "fa4ec1a5bf502315392f0fd430ef909baf3729af4752a6623210a82338eaab86",
+      "baseline_lines": 108,
+      "current_lines": 110,
+      "common_lines": 107,
+      "similarity_percent": 98.17
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/net_prov.h",
+      "sha256_lf": "75bbb5a1e8155be13dae67de71adffaff6bfd86dac2af14e3953c3c70f26b180",
+      "baseline_lines": 22,
+      "current_lines": 22,
+      "common_lines": 21,
+      "similarity_percent": 95.45
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/net_wifi.cpp",
+      "sha256_lf": "e8ae382dccb7ba37957cfea1a28bcdd7fe89013b527ad27336cd20c906e44192",
+      "baseline_lines": 155,
+      "current_lines": 205,
+      "common_lines": 154,
+      "similarity_percent": 85.56
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/net_wifi.h",
+      "sha256_lf": "1c663c80b7a2a5822049853e08d1bdd402441a0398f1aa919b499f58f4d23b84",
+      "baseline_lines": 24,
+      "current_lines": 27,
+      "common_lines": 24,
+      "similarity_percent": 94.12
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/net_ws.cpp",
+      "sha256_lf": "1278aea30fa640e81c13927c9c906cf1b0b24f5701a4e62add1b55a1dc69fc2f",
+      "baseline_lines": 385,
+      "current_lines": 399,
+      "common_lines": 371,
+      "similarity_percent": 94.64
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/net_ws.h",
+      "sha256_lf": "8a480309133e7f8af063f4f0c8035127e64169769a09ae1173d5ef69c133d39f",
+      "baseline_lines": 44,
+      "current_lines": 48,
+      "common_lines": 42,
+      "similarity_percent": 91.3
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/partitions.csv",
+      "sha256_lf": "bcb9e0d58a96b48ff63884f0d39adaa568fda9b4da57697b2208f90cfa792843"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/pdm_filter.cpp",
+      "sha256_lf": "8d6b8596fcc2f3eb859bac674d6de1d93a73d308f3a71b5651fc27eba8551174",
+      "baseline_lines": 64,
+      "current_lines": 64,
+      "common_lines": 64,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/pdm_filter.h",
+      "sha256_lf": "88934a4f91216d1d6ba663f74f9b01720973c3f3cfd5e6718e8115f61fda0142",
+      "baseline_lines": 16,
+      "current_lines": 16,
+      "common_lines": 16,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/platform.h",
+      "sha256_lf": "4d56083eab13eff108c4a7f9e0bf53a906f2cb0929aa271d277d0e67e557f024",
+      "baseline_lines": 16,
+      "current_lines": 16,
+      "common_lines": 16,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/power.cpp",
+      "sha256_lf": "755800b0871db3e80eb6f08f95b0759ebce76b096bba67a6b0b37ec6d201536a",
+      "baseline_lines": 153,
+      "current_lines": 144,
+      "common_lines": 124,
+      "similarity_percent": 83.5
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/power.h",
+      "sha256_lf": "2dda12a1af6f648ab5a267a9ae56613353b2886f7016476bcb956ec75998dc86",
+      "baseline_lines": 8,
+      "current_lines": 9,
+      "common_lines": 8,
+      "similarity_percent": 94.12
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/power_policy.h",
+      "sha256_lf": "d14d76f654bcbba82fb8f5e3a120d3059f581f700c9fcf191f1a61cdf4478f55",
+      "baseline_lines": 29,
+      "current_lines": 31,
+      "common_lines": 29,
+      "similarity_percent": 96.67
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/proto.cpp",
+      "sha256_lf": "5b28321327bc55a837b4a04ffa745a3d67a0910aedbe25b27b66883675cdb595",
+      "baseline_lines": 101,
+      "current_lines": 146,
+      "common_lines": 98,
+      "similarity_percent": 79.35
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/proto.h",
+      "sha256_lf": "a74dc8ea592cda1c2289e52a9ffaf9b1bdb481b238e9e2a7d0286d2c88a1e1e8",
+      "baseline_lines": 39,
+      "current_lines": 45,
+      "common_lines": 39,
+      "similarity_percent": 92.86
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/ring.cpp",
+      "sha256_lf": "b0dfaf553a8d5c5e24ceb22a4a29742776dc72d039a9e4bc05d70930f21e746b",
+      "baseline_lines": 41,
+      "current_lines": 41,
+      "common_lines": 41,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/ring.h",
+      "sha256_lf": "a71e802d7519a52675287f8242fbe91f5201d38d171d96a13b0f1c729646f95b",
+      "baseline_lines": 31,
+      "current_lines": 31,
+      "common_lines": 31,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/sdkconfig.defaults",
+      "sha256_lf": "748cebdf37d8faec422d5ee2c1235ae7e66a2a10b021e80e8c1725ed645b9f5d"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/secrets.h.example",
+      "sha256_lf": "18c5cf05aaab4af8c411c7d485611d2f7e0e6ecaedd70ee5f8f35259f66b52f0"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/session.cpp",
+      "sha256_lf": "841ff67140fb93db2f46081fa9882cc2f77d94e117038aef350202f468cbd982",
+      "baseline_lines": 395,
+      "current_lines": 585,
+      "common_lines": 383,
+      "similarity_percent": 78.16
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/session.h",
+      "sha256_lf": "6f1d3fec41734ab4dc345af312e3871fe1b311097813450263e0a778e51b4122",
+      "baseline_lines": 28,
+      "current_lines": 30,
+      "common_lines": 28,
+      "similarity_percent": 96.55
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/tests/host_tests.cpp",
+      "sha256_lf": "351cedad67638432f928db67e8c7bf58929b074fbe00ec2690815bf5a2003eaa",
+      "baseline_lines": 105,
+      "current_lines": 109,
+      "common_lines": 104,
+      "similarity_percent": 97.2
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/tools/build.ps1",
+      "sha256_lf": "c9da594e2ae4c7707dd7d18fcce3ab1751611035eca888cb5b28ab4fd1414491"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/tools/test_battery_adc.py",
+      "sha256_lf": "20491978f63170658b8abc7fa4125657128414312c0f0d99b8ebdd7713a2b3d0"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/tools/test_ble_control.py",
+      "sha256_lf": "2189181148115f2d19b8c3706af9042808d2e71deeb63eb52a50d7279d0c80b9"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/tools/test_button.py",
+      "sha256_lf": "4deb75b5ff0307b1a354d640d8fb86e6910475acc694ad7ba6a6043ffdd4e5e5"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/tools/test_session_recovery.py",
+      "sha256_lf": "211aeba4cb5abbd7cea052fb3ba7cbb931fa68d50c139599f1e6833c3a0f18a7"
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/transport.cpp",
+      "sha256_lf": "30cab852b33cc0326c4facd239eebccdc4f54b0db739cd5988e0c16838674905",
+      "baseline_lines": 109,
+      "current_lines": 132,
+      "common_lines": 107,
+      "similarity_percent": 88.8
+    },
+    {
+      "path": "firmware/ESP32C3_AI_Voice/transport.h",
+      "sha256_lf": "5d548545436c1d44f5d40992e7835a52bde0650dd5be1cd5fe162c241f7bc46a",
+      "baseline_lines": 10,
+      "current_lines": 10,
+      "common_lines": 10,
+      "similarity_percent": 100.0
+    },
+    {
+      "path": "firmware/ESP32C3_HwTest/CMakeLists.txt",
+      "sha256_lf": "9830d9c761f6c93123d04543725ca6a008257ec9e390f4db0c803f9cfe9ffcb8"
+    },
+    {
+      "path": "firmware/ESP32C3_HwTest/README.md",
+      "sha256_lf": "f41103bcdf0b08a2df03b8fa7499905d5877c0cf0349d1dfa717e3f1aff8cfaa"
+    },
+    {
+      "path": "firmware/ESP32C3_HwTest/hwtest_main.cpp",
+      "sha256_lf": "737565f9193a1797d09eb8fe0e5e1cda19e0754e9c888d39f875188f44812b42",
+      "baseline_lines": 287,
+      "current_lines": 268,
+      "common_lines": 259,
+      "similarity_percent": 93.33
+    },
+    {
+      "path": "firmware/ESP32C3_HwTest/main/CMakeLists.txt",
+      "sha256_lf": "095948506e4e0fc43c256691d226e215d501eb018adbfc78a194ee4d8d30d31a"
+    },
+    {
+      "path": "firmware/ESP32C3_HwTest/sdkconfig.defaults",
+      "sha256_lf": "bcc71c6eaae04e88ef8513357beb21809e1f4f07c72c513071b9b231849798ce"
+    },
+    {
+      "path": "firmware/ESP32C3_HwTest/tools/build.ps1",
+      "sha256_lf": "3901ef0fa1b2d87310541263c29213eb2af0031d533742b74135ee5240b1cb88"
+    }
+  ]
+}
